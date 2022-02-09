@@ -8,7 +8,7 @@ canvas.height = window.innerHeight;
 let mouse = {
     x: undefined,
     y: undefined,
-    radius: 10
+    radius: ((canvas.width/80) * (canvas.height/80))
 }
 
 
@@ -18,6 +18,15 @@ window.addEventListener('mousemove',
         mouse.y = event.y;
     }
 )
+
+window.addEventListener('resize',
+    function (){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        mouse.radius = ((canvas.width/80) * (canvas.height/80));
+    }
+)
+
 
 //create particle
 class Particle {
@@ -40,10 +49,10 @@ class Particle {
 
     // update particle
     update() {
-        if (this.x - this.radius > canvas.width || this.x - this.radius < 0) {
+        if (this.x > canvas.width - this.radius || this.x - this.radius < 0) {
             this.directionX = -this.directionX;
         }
-        if (this.y - this.radius > canvas.width || this.y - this.radius < 0) {
+        if (this.y > canvas.height - this.radius || this.y - this.radius < 0) {
             this.directionY = -this.directionY;
         }
         // collision detection
@@ -76,16 +85,20 @@ class Particle {
 
 
 // create array of particles
-function init() {
-
+function init(speed = 10) {
     let numberOfParticles = 100;
     for (let i = 0; i < numberOfParticles; i++) {
-        let radius = Math.random() * 10 + 1;
+        let min = 6;
+        let max = 8;
+        let radius = Math.random() * (max - min + 1) + min;
         let x = Math.random() * (canvas.width - radius * 2) + radius;
         let y = Math.random() * (canvas.height - radius * 2) + radius;
-        let directionX = (Math.random() - 0.5) * 2;
-        let directionY = (Math.random() - 0.5) * 2;
-        let color = '#' + Math.floor(Math.random() * 16777215).toString(16);
+        let directionX = (Math.random() - 0.5) * speed;
+        let directionY = (Math.random() - 0.5) * speed;
+        // generate gray color
+        //bitwise OR. Gives value in the range 0-255 which is then converted to base 16 (hex)
+        let v = (Math.random()*(256)|0).toString(16);
+        let color = '#' + v + v + v;
         particles.push(new Particle(x, y, directionX, directionY, radius, color));
     }
 }
