@@ -19,6 +19,14 @@ window.addEventListener('mousemove',
     }
 )
 
+window.addEventListener('mouseout',
+    function (event) {
+        mouse.x = undefined;
+        mouse.y = undefined;
+    }
+)
+
+
 window.addEventListener('resize',
     function (){
         canvas.width = window.innerWidth;
