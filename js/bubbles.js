@@ -2,30 +2,7 @@ const canvas = document.getElementById('canvas1');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
-
-// mouse position
-let mouse = {
-    x: undefined,
-    y: undefined,
-    radius: ((canvas.width/80) * (canvas.height/80))
-}
-
-
-window.addEventListener('mousemove',
-    function (event) {
-        mouse.x = event.x;
-        mouse.y = event.y;
-    }
-)
-
-window.addEventListener('mouseout',
-    function (event) {
-        mouse.x = undefined;
-        mouse.y = undefined;
-    }
-)
-
+let particles = [];
 
 window.addEventListener('resize',
     function (){
@@ -120,7 +97,7 @@ function animate () {
     }
 }
 
-let particles = [];
+
 init();
 animate();
 
