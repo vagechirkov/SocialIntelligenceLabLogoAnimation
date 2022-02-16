@@ -2,7 +2,6 @@
 let mouse = {
     x: undefined,
     y: undefined,
-    radius: ((canvas.width/80) * (canvas.height/80))
 }
 
 
